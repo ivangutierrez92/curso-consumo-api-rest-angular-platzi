@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { User } from './models/user.model';
-import { AuthService } from './services/auth.service';
 import { FilesService } from './services/files.service';
 import { UsersService } from './services/users.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  template: '<router-outlet></router-outlet>',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {

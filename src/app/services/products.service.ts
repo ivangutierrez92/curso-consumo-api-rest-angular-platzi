@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from '@angular/common/http';
 import { catchError, map, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -32,7 +36,7 @@ export class ProductsService {
     );
   }
 
-  getProduct(id: number) {
+  getOne(id: string) {
     return this.http.get<Product>(`${this.apiUrl}/${id}`).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.status === 500) {
@@ -44,6 +48,7 @@ export class ProductsService {
         if (error.status === 401) {
           return throwError(() => new Error('No estás autorizado'));
         }
+        console.log(error);
         return throwError(() => new Error('Ups, algo salió mal'));
       })
     );
@@ -56,14 +61,26 @@ export class ProductsService {
     });
   }
 
+  getByCategory(categoryId: string, limit?: number, offset?: number) {
+    let params = new HttpParams();
+    if (limit && offset != null) {
+      params = params.set('limit', limit);
+      params = params.set('offset', offset);
+    }
+    return this.http.get<Product[]>(
+      `${environment.API_URL}/api/v1/categories/${categoryId}/products`,
+      { params }
+    );
+  }
+
   create(dto: CreateProductDTO) {
     return this.http.post<Product>(this.apiUrl, dto);
   }
 
-  update(id: number, dto: UpdateProductDTO) {
+  update(id: string, dto: UpdateProductDTO) {
     return this.http.put<Product>(`${this.apiUrl}/${id}`, dto);
   }
-  delete(id: number) {
+  delete(id: string) {
     return this.http.delete<boolean>(`${this.apiUrl}/${id}`);
   }
 }
