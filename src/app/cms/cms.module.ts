@@ -5,6 +5,7 @@ import { CmsRoutingModule } from './cms-routing.module';
 import { TaskComponent } from './pages/task/task.component';
 import { GridComponent } from './pages/grid/grid.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { LayoutComponent } from './components/layout/layout.component';
   ],
   imports: [
     CommonModule,
-    CmsRoutingModule
+    CmsRoutingModule,
+    SharedModule,
   ]
 })
 export class CmsModule { }

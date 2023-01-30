@@ -41,7 +41,8 @@
         Login
       </button>
       <ng-template #getProfileBlock>
-        {{ user?.email }}
+        <a routerLink="/profile">{{ user?.email }}</a>
+        <button (click)="logout()">Logout</button>
       </ng-template>
       <div class="cart">
         <a href="">
